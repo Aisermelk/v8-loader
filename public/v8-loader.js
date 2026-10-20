@@ -1,6 +1,8 @@
 /*!
- * V8 LOADER v4.2 — conecta landing pages, sites, catálogos e lojas virtuais ao V8 Admin Universal.
+ * V8 LOADER — conecta landing pages, sites, catálogos e lojas virtuais ao V8 Admin Universal.
  * Preserva os recursos v4 + catálogo comercial, carrinho, entrega e checkout de pedidos.
+ * v4.3: Estado só aparece no Frete (entrega local pede apenas a região); escolha do provedor de pagamento
+ * (InfinitePay / Mercado Pago) quando mais de um estiver ligado; modalidade única já vem selecionada.
  *
  * USO MÍNIMO (antes de </body>):
  *   <script src="js/v8-loader.js" data-project-id="ID_DO_PROJETO"></script>
@@ -168,7 +170,7 @@
       ".v8-catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}.v8-card{border:1px solid rgba(128,128,128,.3);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}.v8-card-media{aspect-ratio:4/3;background:rgba(128,128,128,.12);display:grid;place-items:center}.v8-card-media img{width:100%;height:100%;object-fit:cover}" +
       ".v8-card-body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}.v8-card-body h3{margin:0;font-size:1.05em}.v8-card-body p{margin:0;opacity:.75;font-size:.92em}.v8-price{font-weight:700}.v8-badge{font-size:.72em;padding:2px 8px;border-radius:999px;border:1px solid currentColor;margin-right:4px}.v8-tags{display:flex;gap:6px;flex-wrap:wrap}.v8-tag{font-size:.78em;opacity:.7}.v8-cta{margin-top:auto;display:inline-block;text-align:center;padding:10px 14px;border-radius:10px;border:1px solid currentColor;text-decoration:none;color:inherit}" +
       ".v8-form-msg{margin-top:10px;font-size:.92em}" +
-      ".v8-store{display:grid;gap:22px}.v8-store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}.v8-store-card{border:1px solid rgba(128,128,128,.3);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}.v8-store-card img{width:100%;aspect-ratio:4/3;object-fit:cover;background:rgba(128,128,128,.1)}.v8-store-card-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}.v8-store-card h3{margin:0;font-size:1.02em}.v8-store-card p{margin:0;opacity:.75;font-size:.92em}.v8-store-btn{font:inherit;cursor:pointer;border:1px solid currentColor;border-radius:9px;padding:10px 12px;background:transparent;color:inherit}.v8-store-btn-primary{background:var(--v8-accent,#2563eb);border-color:var(--v8-accent,#2563eb);color:#fff}.v8-store-panel{border:1px solid rgba(128,128,128,.3);border-radius:14px;padding:16px;min-width:0}.v8-store-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(128,128,128,.18)}.v8-store-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.v8-store-fields label{display:grid;gap:5px;font-size:.9em}.v8-store-fields input,.v8-store-fields select,.v8-store-fields textarea{width:100%;min-width:0;box-sizing:border-box;padding:10px;border:1px solid rgba(128,128,128,.35);border-radius:8px;background:transparent;color:inherit;font:inherit}.v8-store-total{font-size:1.08em;font-weight:750}.v8-store-msg{margin:10px 0;padding:10px;border-radius:8px;background:rgba(128,128,128,.12)}.v8-store-qty{width:58px;padding:6px;border:1px solid rgba(128,128,128,.35);border-radius:7px;background:transparent;color:inherit}.v8-store-muted{opacity:.72;font-size:.9em}@media(max-width:600px){.v8-store-fields{grid-template-columns:1fr}.v8-store-panel{padding:12px}.v8-store-row{align-items:flex-start}}";
+      ".v8-store{display:grid;gap:22px}.v8-store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}.v8-store-card{border:1px solid rgba(128,128,128,.3);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}.v8-store-card img{width:100%;aspect-ratio:4/3;object-fit:cover;background:rgba(128,128,128,.1)}.v8-store-card-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}.v8-store-card h3{margin:0;font-size:1.02em}.v8-store-card p{margin:0;opacity:.75;font-size:.92em}.v8-store-btn{font:inherit;cursor:pointer;border:1px solid currentColor;border-radius:9px;padding:10px 12px;background:transparent;color:inherit}.v8-store-btn-primary{background:var(--v8-accent,#2563eb);border-color:var(--v8-accent,#2563eb);color:#fff}.v8-store-panel{border:1px solid rgba(128,128,128,.3);border-radius:14px;padding:16px;min-width:0}.v8-store-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(128,128,128,.18)}.v8-store-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.v8-store-fields label{display:grid;gap:5px;font-size:.9em}.v8-store-fields input,.v8-store-fields select,.v8-store-fields textarea{width:100%;min-width:0;box-sizing:border-box;padding:10px;border:1px solid rgba(128,128,128,.35);border-radius:8px;background:transparent;color:inherit;font:inherit}.v8-store [hidden],.v8-store-panel [hidden],.v8-store-fields label[hidden]{display:none!important}.v8-store-pay{border:0;padding:0;margin:12px 0 0;display:grid;gap:8px}.v8-store-pay legend{font-weight:650;padding:0;margin-bottom:6px}.v8-store-pay label{display:flex;gap:8px;align-items:center;cursor:pointer;padding:10px;border:1px solid rgba(128,128,128,.3);border-radius:8px}.v8-store-total{font-size:1.08em;font-weight:750}.v8-store-msg{margin:10px 0;padding:10px;border-radius:8px;background:rgba(128,128,128,.12)}.v8-store-qty{width:58px;padding:6px;border:1px solid rgba(128,128,128,.35);border-radius:7px;background:transparent;color:inherit}.v8-store-muted{opacity:.72;font-size:.9em}@media(max-width:600px){.v8-store-fields{grid-template-columns:1fr}.v8-store-panel{padding:12px}.v8-store-row{align-items:flex-start}}";
     var st = document.createElement("style"); st.id = "v8-loader-style"; st.textContent = css; document.head.appendChild(st);
   }
 
@@ -487,6 +489,12 @@
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state.cart)); } catch (e) {}
     fire("v8:cart", cartSummary());
   }
+  function paymentProviders() {
+    var pay = (state.config && state.config.payments) || {}, out = [];
+    if (pay.infinitePay && pay.infinitePay.enabled) out.push({ id: "infinitepay", label: "InfinitePay (Pix e cartão)" });
+    if (pay.mercadoPago && pay.mercadoPago.enabled) out.push({ id: "mercadopago", label: "Mercado Pago (Pix e cartão)" });
+    return out;
+  }
   function storeEnabled() { return !!(state.config && state.config.ecommerce && state.config.ecommerce.enabled); }
   function cartItems() {
     var products = state.catalog && state.catalog.products || [];
@@ -541,11 +549,12 @@
     html += '<div class="v8-store-row"><span>Subtotal</span><strong>' + formatMoney(summary.subtotal) + '</strong></div>';
     if (!options.length) html += '<p class="v8-store-msg">A loja está ativa, mas não há modalidade de entrega ou retirada habilitada. Entre em contato com a loja.</p>';
     else {
-      html += '<h3>Como deseja receber?</h3><div class="v8-store-fields"><label>Modalidade<select data-v8-store-method><option value="">Selecione</option>' + options.map(function (o) { return '<option value="' + esc(o.id) + '">' + esc(o.label) + '</option>'; }).join("") + '</select></label><label data-v8-store-state-wrap hidden>Estado de destino<select data-v8-store-state><option value="">Selecione o estado</option>' + ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"].map(function (uf) { return '<option value="' + uf + '">' + uf + '</option>'; }).join("") + '</select></label><label data-v8-store-region-wrap hidden>Região de entrega<select data-v8-store-region><option value="">Selecione a região</option>' + deliveryConfig().localDelivery.regions.filter(function (r) { return r.enabled !== false; }).map(function (r) { return '<option value="' + esc(r.id) + '">' + esc(r.name) + ' — ' + formatMoney(r.fee) + '</option>'; }).join("") + '</select></label></div>';
+      html += '<h3>Como deseja receber?</h3><div class="v8-store-fields"><label>Modalidade<select data-v8-store-method><option value="">Selecione</option>' + options.map(function (o) { return '<option value="' + esc(o.id) + '"' + (options.length === 1 ? ' selected' : '') + '>' + esc(o.label) + '</option>'; }).join("") + '</select></label><label data-v8-store-state-wrap hidden>Estado de destino<select data-v8-store-state><option value="">Selecione o estado</option>' + ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"].map(function (uf) { return '<option value="' + uf + '">' + uf + '</option>'; }).join("") + '</select></label><label data-v8-store-region-wrap hidden>Região de entrega<select data-v8-store-region><option value="">Selecione a região</option>' + deliveryConfig().localDelivery.regions.filter(function (r) { return r.enabled !== false; }).map(function (r) { return '<option value="' + esc(r.id) + '">' + esc(r.name) + ' — ' + formatMoney(r.fee) + '</option>'; }).join("") + '</select></label></div>';
       html += '<div class="v8-store-row"><span>Entrega</span><strong data-v8-store-fee>Selecione uma modalidade</strong></div>';
       html += '<h3>Seus dados</h3><form data-v8-store-checkout><div class="v8-store-fields"><label>Nome completo<input name="name" required maxlength="160" autocomplete="name"></label><label>Telefone/WhatsApp<input name="phone" required maxlength="40" autocomplete="tel"></label><label>E-mail (opcional)<input name="email" type="email" maxlength="180" autocomplete="email"></label><label>Endereço (opcional)<input name="address" maxlength="500" autocomplete="street-address"></label><label style="grid-column:1/-1">Observações<textarea name="notes" rows="2" maxlength="1000"></textarea></label></div><div class="v8-store-row"><span>Total</span><strong class="v8-store-total" data-v8-store-total>' + formatMoney(summary.subtotal) + '</strong></div><div data-v8-store-message role="status" aria-live="polite"></div>';
-      var pay = (state.config && state.config.payments) || {}, mp = pay.mercadoPago && pay.mercadoPago.enabled, ip = pay.infinitePay && pay.infinitePay.enabled;
-      html += '<button type="submit" class="v8-store-btn v8-store-btn-primary" style="width:100%;margin-top:12px" data-v8-store-submit>Finalizar pedido' + (mp || ip ? ' e pagar' : '') + '</button></form>';
+      var providers = paymentProviders();
+      if (providers.length > 1) html += '<fieldset class="v8-store-pay"><legend>Forma de pagamento</legend>' + providers.map(function (p, i) { return '<label><input type="radio" name="v8-pay-provider" value="' + esc(p.id) + '" data-v8-store-provider' + (i === 0 ? ' checked' : '') + '> ' + esc(p.label) + '</label>'; }).join("") + '</fieldset>';
+      html += '<button type="submit" class="v8-store-btn v8-store-btn-primary" style="width:100%;margin-top:12px" data-v8-store-submit>Finalizar pedido' + (providers.length ? ' e pagar' : '') + '</button></form>';
     }
     return html + '</section>';
   }
@@ -558,9 +567,9 @@
       var limit = parseInt(attr(el, "data-limit"), 10) || 0; if (limit) filtered = filtered.slice(0, limit);
       el.classList.add("v8-store");
       el.innerHTML = '<div class="v8-store-grid">' + (filtered.length ? filtered.map(storeCard).join("") : '<p class="v8-store-msg">Nenhum produto disponível.</p>') + '</div>' + storeCartMarkup();
-      bindStoreEvents(el);
+      bindStoreEvents(el); updateStoreTotals(el);
     });
-    qsa("[data-v8-cart]").forEach(function (el) { el.innerHTML = storeEnabled() ? storeCartMarkup() : '<p class="v8-store-msg">A loja virtual está desativada.</p>'; bindStoreEvents(el); });
+    qsa("[data-v8-cart]").forEach(function (el) { el.innerHTML = storeEnabled() ? storeCartMarkup() : '<p class="v8-store-msg">A loja virtual está desativada.</p>'; bindStoreEvents(el); updateStoreTotals(el); });
   }
   function updateStoreTotals(el) {
     var method = el.querySelector("[data-v8-store-method]"), region = el.querySelector("[data-v8-store-region]"), uf = el.querySelector("[data-v8-store-state]"), feeEl = el.querySelector("[data-v8-store-fee]"), totalEl = el.querySelector("[data-v8-store-total]"), stateWrap = el.querySelector("[data-v8-store-state-wrap]"), regionWrap = el.querySelector("[data-v8-store-region-wrap]");
@@ -596,25 +605,23 @@
     if (!summary.items.length) { message("Seu carrinho está vazio."); return; }
     if (!delivery.success) { message(delivery.error || "Selecione uma modalidade de recebimento válida."); return; }
     if (!form.reportValidity()) return;
-    var fd = new FormData(form), payload = { name: fd.get("name"), phone: fd.get("phone"), email: fd.get("email"), address: fd.get("address"), notes: fd.get("notes"), items: summary.items.map(function (x) { return { id: x.id, quantity: x.quantity }; }), deliveryMethod: method, regionId: method === "local" ? regionEl.value : "", destinationState: method === "shipping" ? stateEl.value : "" };
+    var fd = new FormData(form), payload = { name: fd.get("name"), phone: fd.get("phone"), email: fd.get("email"), address: fd.get("address"), notes: fd.get("notes"), items: summary.items.map(function (x) { return { id: x.id, quantity: x.quantity }; }), deliveryMethod: method, regionId: method === "local" && regionEl ? regionEl.value : "", destinationState: method === "shipping" && stateEl ? stateEl.value : "" };
     if (btn) { btn.disabled = true; btn.textContent = "Registrando pedido…"; }
     request("/api/public/orders/" + encodeURIComponent(PROJECT_ID), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then(function (orderRes) {
       if (!orderRes || !orderRes.success || !orderRes.order) throw new Error(orderRes && orderRes.error || "Não foi possível registrar o pedido.");
-      var pay = (state.config && state.config.payments) || {}, providers = [];
-      if (pay.mercadoPago && pay.mercadoPago.enabled) providers.push("mercadopago");
-      if (pay.infinitePay && pay.infinitePay.enabled) providers.push("infinitepay");
+      var providers = paymentProviders().map(function (p) { return p.id; });
       if (!providers.length) {
         state.cart = []; saveCart(); renderStore();
         var success = document.createElement("p"); success.className = "v8-store-msg"; success.textContent = "Pedido " + (orderRes.order.orderNumber || "") + " registrado com sucesso. A loja entrará em contato para confirmar o pagamento."; el.insertBefore(success, el.firstChild);
         fire("v8:order-created", orderRes.order); return;
       }
-      var provider = providers[0];
+      var chosen = el.querySelector("[data-v8-store-provider]:checked"), provider = chosen && providers.indexOf(chosen.value) >= 0 ? chosen.value : providers[0];
       return request("/api/public/orders/" + encodeURIComponent(PROJECT_ID) + "/" + encodeURIComponent(orderRes.order.id) + "/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ provider: provider, redirectUrl: location.href }) }).then(function (checkout) {
         if (!checkout || !checkout.success || !checkout.url) throw new Error(checkout && checkout.error || "Pedido registrado, mas não foi possível abrir o pagamento.");
         state.cart = []; saveCart();
         fire("v8:order-created", orderRes.order); location.href = checkout.url;
       });
-    }).catch(function (err) { message(err.message || "Erro ao finalizar o pedido."); }).finally(function () { if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = "Finalizar pedido"; } });
+    }).catch(function (err) { message(err.message || "Erro ao finalizar o pedido."); }).finally(function () { if (btn && document.contains(btn)) { btn.disabled = false; btn.textContent = "Finalizar pedido" + (paymentProviders().length ? " e pagar" : ""); } });
   }
   function buildStoreApi() { return { enabled: storeEnabled, cart: cartSummary, add: cartAdd, setQuantity: cartSetQty, clear: function () { state.cart = []; saveCart(); renderStore(); }, render: renderStore }; }
 
